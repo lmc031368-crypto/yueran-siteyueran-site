@@ -1,11 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-// 引入 Next.js 专用图片组件，彻底防止 Vercel 的 <img> 拦截报错
 import Image from 'next/image';
 
 export default function Home() {
-  // 表单状态管理
+  // 保持你原版的表单状态与提交逻辑
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      {/* 1. 全套视觉动效与排版样式（包含你最爱的卡片弹起、图片内敛放大） */}
+      {/* 注入你原汁原味的 CSS 样式与所有悬浮弹起、内敛放大特效 */}
       <style dangerouslySetInnerHTML={{ __html: `
         html {
           scroll-behavior: smooth;
@@ -37,7 +36,6 @@ export default function Home() {
           color: #333;
         }
         
-        /* 顶部大横幅 */
         .hero-banner {
           width: 100%;
           max-width: 1100px;
@@ -61,7 +59,6 @@ export default function Home() {
           z-index: 2;
         }
 
-        /* 产品网格布局 */
         .products-grid {
           display: flex;
           flex-wrap: wrap;
@@ -72,7 +69,7 @@ export default function Home() {
           padding: 0 20px;
         }
 
-        /* 核心卡片悬浮向上弹起放大特效 */
+        /* 你的核心卡片 hover 向上弹起放大特效 */
         .product-card {
           background: #ffffff;
           border-radius: 24px;
@@ -88,7 +85,6 @@ export default function Home() {
           box-shadow: 0 20px 40px rgba(27, 67, 50, 0.12);
         }
 
-        /* 图片容器与内敛放大特效 */
         .image-container {
           width: 100%;
           height: 240px;
@@ -98,6 +94,7 @@ export default function Home() {
           background-color: #f0f2f0;
           margin-bottom: 16px;
         }
+        /* 图片 hover 在内部平滑放大特效 */
         .zoom-image {
           transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
@@ -105,7 +102,6 @@ export default function Home() {
           transform: scale(1.08);
         }
 
-        /* 底部双栏布局容器 */
         .bottom-section {
           max-width: 1100px;
           margin: 40px auto 80px auto;
@@ -127,7 +123,6 @@ export default function Home() {
           box-sizing: border-box;
         }
 
-        /* 社交媒体按钮 */
         .social-icons {
           display: flex;
           gap: 14px;
@@ -149,7 +144,6 @@ export default function Home() {
           transform: translateY(-2px);
         }
 
-        /* 表单输入框通用样式 */
         .form-group {
           margin-bottom: 16px;
         }
@@ -177,14 +171,12 @@ export default function Home() {
         }
       `}} />
 
-      {/* 2. 页面主体内容 */}
       <main>
-        
-        {/* 顶部森林巨幕横幅 */}
+        {/* 1. 顶部大横幅 */}
         <div className="hero-banner">
           <Image 
             src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" 
-            alt="Natural Forest Background"
+            alt="Lin Ximian Biotechnology Banner"
             fill
             priority
             style={{ objectFit: 'cover' }}
@@ -212,14 +204,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 精美三大产品卡片网格 */}
+        {/* 2. 你的三张核心精美卡片视图 */}
         <div className="products-grid">
           
+          {/* 卡片 1 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
                 src="https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&w=600&q=80" 
-                alt="Natural Skincare"
+                alt="Product 1"
                 fill
                 sizes="320px"
                 style={{ objectFit: 'cover' }}
@@ -232,11 +225,12 @@ export default function Home() {
             </p>
           </div>
 
+          {/* 卡片 2 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
                 src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=600&q=80" 
-                alt="Pet Tech Solutions"
+                alt="Product 2"
                 fill
                 sizes="320px"
                 style={{ objectFit: 'cover' }}
@@ -249,11 +243,12 @@ export default function Home() {
             </p>
           </div>
 
+          {/* 卡片 3 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
                 src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80" 
-                alt="Advanced Technology"
+                alt="Product 3"
                 fill
                 sizes="320px"
                 style={{ objectFit: 'cover' }}
@@ -268,7 +263,7 @@ export default function Home() {
 
         </div>
 
-        {/* 底部双栏：左边社交媒体小窗口 + 右边核心动态询盘表单 */}
+        {/* 3. 底部双栏布局 */}
         <div className="bottom-section">
           
           {/* 左侧：社交媒体小窗口 */}
@@ -284,7 +279,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* 右侧：完美的 #inquiry-form-section 询盘表单区域 */}
+          {/* 右侧：原汁原味的 #inquiry-form-section 询盘表单区域 */}
           <div className="card-window" id="inquiry-form-section">
             <h3 style={{ color: '#1b4332', margin: '0 0 6px 0', fontSize: '20px' }}>商务意向登记</h3>
             <p style={{ color: '#888', fontSize: '13px', margin: '0 0 20px 0' }}>请留下您的联系方式，我们的团队会尽快与您取得联系。</p>
@@ -356,7 +351,5 @@ export default function Home() {
 
       </main>
     </>
-  );
-}
   );
 }
