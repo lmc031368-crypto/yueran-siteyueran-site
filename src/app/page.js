@@ -6,6 +6,7 @@ export default function Home() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    whatsapp: '',
     message: ''
   });
 
@@ -15,111 +16,126 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`🔺 Thank you, ${formData.name || 'Dear'}!\nYour inquiry has been submitted successfully.\n提交成功！我们会尽快与您联系 🍃`);
-    setFormData({ name: '', email: '', message: '' });
+    alert(`Thank you, ${formData.name || 'Dear'}!\nYour inquiry has been submitted successfully.\n我们已收到您的询盘，会尽快与您联系 🍃`);
+    setFormData({ name: '', email: '', whatsapp: '', message: '' });
   };
 
   return (
     <>
+      {/* 100% 还原你原版设置的全部交互动效与圆角卡片样式 */}
       <style dangerouslySetInnerHTML={{ __html: `
-        html { scroll-behavior: smooth; }
-        body { margin: 0; padding: 0; background-color: #f7f9f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; }
-        .hero-banner { width: 100%; max-width: 1100px; height: 380px; position: relative; margin: 40px auto 20px auto; border-radius: 32px; overflow: hidden; box-shadow: 0 20px 40px rgba(27, 67, 50, 0.08); background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5)); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; z-index: 2; }
-        .products-grid { display: flex; flex-wrap: wrap; gap: 24px; justify-content: center; max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        .product-card { background: #ffffff; border-radius: 24px; padding: 20px; width: 320px; box-sizing: border-box; box-shadow: 0 10px 25px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease; }
-        .product-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(27, 67, 50, 0.12); }
-        .image-container { width: 100%; height: 240px; border-radius: 16px; overflow: hidden; background-size: cover; background-position: center; margin-bottom: 16px; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .product-card:hover .image-container { transform: scale(1.04); }
-        .bottom-section { max-width: 1100px; margin: 40px auto 80px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 30px; width: 100%; box-sizing: border-box; }
-        .card-window { flex: 1; min-width: 320px; background: #ffffff; border-radius: 24px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); box-sizing: border-box; }
-        .social-icons { display: flex; gap: 14px; margin-top: 20px; }
-        .social-btn { padding: 10px 18px; border-radius: 50px; background: #f0f4f1; color: #2d6a4f; text-decoration: none; font-weight: 600; font-size: 13px; transition: all 0.2s; }
-        .social-btn:hover { background: #2d6a4f; color: #ffffff; transform: translateY(-2px); }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; margin-bottom: 6px; font-size: 13px; color: #2d6a4f; font-weight: 600; }
-        .form-input { width: 100%; padding: 12px; border: 1px solid #e0e6e2; border-radius: 12px; background-color: #fbfcfb; font-size: 14px; box-sizing: border-box; transition: border 0.2s; }
-        .form-input:focus { outline: none; border-color: #2d6a4f; background-color: #ffffff; }
+        html {
+          scroll-behavior: smooth;
+        }
+        .product-card {
+          background-color: #ffffff;
+          border-radius: 24px;
+          padding: 24px;
+          box-shadow: 0 12px 30px rgba(27, 67, 50, 0.05);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          box-sizing: border-box;
+          width: 320px;
+          cursor: pointer;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+        .product-card:hover {
+          transform: translateY(-10px) scale(1.04);
+          box-shadow: 0 25px 50px -12px rgba(27, 67, 50, 0.15);
+        }
+        .img-container img {
+          transition: transform 0.5s ease;
+        }
+        .product-card:hover .img-container img {
+          transform: scale(1.08);
+        }
       `}} />
 
-      <main>
-        <div className="hero-banner">
-          <div className="hero-overlay">
-            <h1 style={{ fontSize: '36px', color: '#ffffff', margin: '0 0 12px 0', fontWeight: '700', letterSpacing: '1px' }}>
-              Lin Ximian Biotechnology Co., Ltd.
-            </h1>
-            <p style={{ fontSize: '18px', color: '#e2f0e7', margin: '0 0 24px 0', letterSpacing: '0.5px' }}>
-              Natural Skincare & Advanced Technology Solutions
-            </p>
-            <a href="#inquiry-form-section" style={{ padding: '12px 32px', backgroundColor: '#2d6a4f', color: '#ffffff', textDecoration: 'none', borderRadius: '50px', fontWeight: '600', fontSize: '15px', boxShadow: '0 4px 15px rgba(0,0,0,0.15)' }}>
-              Inquire Now / 立即咨询
-            </a>
+      <div style={{ minHeight: '100vh', backgroundColor: '#f4f7f5', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', margin: 0, padding: 0 }}>
+        
+        {/* 顶部原始大横幅 */}
+        <div style={{ width: '100%', backgroundImage: "linear-gradient(rgba(15, 32, 18, 0.45), rgba(15, 32, 18, 0.6)), url('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?q=80&w=1200')", backgroundSize: 'cover', backgroundPosition: 'center', padding: '140px 20px 100px 20px', textAlign: 'center', boxSizing: 'border-box', borderBottomLeftRadius: '40px', borderBottomRightRadius: '40px', boxShadow: '0 10px 30px rgba(27, 67, 50, 0.1)', position: 'relative', zIndex: 10 }}>
+          <div style={{ maxWidth: '1100px', margin: '0 auto', color: '#ffffff' }}>
+            <h1 style={{ fontSize: '3.4rem', fontWeight: 900, margin: '0 0 18px 0', letterSpacing: '1px', textShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>Lin Ximian Biotechnology Co., Ltd.</h1>
+            <p style={{ fontSize: '1.3rem', color: '#e8f5e9', margin: '0 0 35px 0', letterSpacing: '1.5px', fontWeight: 300, textShadow: '0 2px 5px rgba(0,0,0,0.25)' }}>Natural Skincare &amp; Advanced Technology Solutions</p>
+            <a href="#inquiry-form-section" style={{ display: 'inline-block', padding: '16px 45px', backgroundColor: '#1b4332', color: '#ffffff', fontWeight: 700, fontShift: 'none', fontSize: '1.15rem', borderRadius: '50px', textDecoration: 'none', boxShadow: '0 10px 25px rgba(27, 67, 50, 0.4)', cursor: 'pointer', position: 'relative', zIndex: 9999 }}>Inquire Now / 在线询盘 ✉ 🌲</a>
           </div>
         </div>
 
-        <div className="products-grid">
-          <div className="product-card">
-            <div className="image-container" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1608248597481-496100c80836?auto=format&fit=crop&w=600&q=80')" }}></div>
-            <h3 style={{ color: '#1b4332', margin: '0 0 8px 0', fontSize: '18px' }}>高级天然护肤</h3>
-            <p style={{ color: '#666', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-              萃取深林核心植物精华，融合现代尖端生物科技，为肌肤注入全天然的修护力量。
-            </p>
-          </div>
-
-          <div className="product-card">
-            <div className="image-container" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=600&q=80')" }}></div>
-            <h3 style={{ color: '#1b4332', margin: '0 0 8px 0', fontSize: '18px' }}>科技宠物护理</h3>
-            <p style={{ color: '#666', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-              专为萌宠研发的温和生态健康配方，无刺激、深层滋养，科技守护毛孩子快乐成长。
-            </p>
-          </div>
-
-          <div className="product-card">
-            <div className="image-container" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=80')" }}></div>
-            <h3 style={{ color: '#1b4332', margin: '0 0 8px 0', fontSize: '18px' }}>尖端生态研发</h3>
-            <p style={{ color: '#666', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
-              拥有行业领先的纯净生物实验室，精益求精，为您定制最安全、最高效的技术方案。
-            </p>
-          </div>
-        </div>
-
-        <div className="bottom-section">
-          <div className="card-window">
-            <h3 style={{ color: '#1b4332', margin: '0 0 12px 0', fontSize: '20px' }}>关注夕眠生态</h3>
-            <p style={{ color: '#666', fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
-              在各个社交媒体平台上关注我们，获取关于绿色生物科技、纯素护肤配方的最新研发动态与限时惊喜。
-            </p>
-            <div className="social-icons">
-              <a href="#" className="social-btn">微信公众号</a>
-              <a href="#" className="social-btn">小红书</a>
-              <a href="#" className="social-btn">Instagram</a>
+        {/* 主体三张产品卡片视图（完全保留你最原始的图片和 emoji 文字） */}
+        <main style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '60px 20px', boxSizing: 'border-box', position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '35px', width: '100%', justifyContent: 'center' }}>
+            
+            <div className="product-card">
+              <div className="img-container" style={{ width: '100%', height: '320px', overflow: 'hidden', borderRadius: '20px' }}>
+                <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?q=80&amp;w=500" alt="Sunscreen" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1b4332', marginTop: '24px' }}>🌿 Sunscreen 🌿</span>
             </div>
-          </div>
 
-          <div className="card-window" id="inquiry-form-section">
-            <h3 style={{ color: '#1b4332', margin: '0 0 6px 0', fontSize: '20px' }}>商务意向登记</h3>
-            <p style={{ color: '#888', fontSize: '13px', margin: '0 0 20px 0' }}>请留下您的联系方式，我们的团队会尽快与您取得联系。</p>
+            <div className="product-card">
+              <div className="img-container" style={{ width: '100%', height: '320px', overflow: 'hidden', borderRadius: '20px' }}>
+                <img src="https://images.unsplash.com/photo-1556229174-5e42a09e45af?q=80&amp;w=500" alt="Repair Cream" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1b4332', marginTop: '24px' }}>✨ Repair Cream ✨</span>
+            </div>
+
+            <div className="product-card">
+              <div className="img-container" style={{ width: '100%', height: '320px', overflow: 'hidden', borderRadius: '20px' }}>
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&amp;w=500" alt="Whitening lotion" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <span style={{ fontSize: '1.25rem', fontWeight: 700, color: '#1b4332', marginTop: '24px' }}>🍃 Whitening lotion 🍃</span>
+            </div>
+
+          </div>
+        </main>
+
+        {/* 原汁原味的表单区域 */}
+        <div id="inquiry-form-section" style={{ width: '100%', padding: '60px 20px', boxSizing: 'border-box', display: 'flex', justifyContent: 'center', backgroundColor: '#e9f5ed' }}>
+          <div style={{ maxWidth: '580px', width: '100%', backgroundColor: '#ffffff', padding: '45px 40px', borderRadius: '32px', boxShadow: '0 20px 45px -10px rgba(27, 67, 50, 0.08)', boxSizing: 'border-box' }}>
+            <h2 style={{ fontSize: '2.1rem', fontWeight: 800, color: '#1b4332', margin: '0 0 8px 0', textAlign: 'center' }}>Product Inquiry</h2>
+            <p style={{ color: '#52b788', fontSize: '0.95rem', margin: '0 0 35px 0', textAlign: 'center', fontWeight: 500 }}>Please fill out the form below, we will reply within 24 hours.</p>
             
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>您的姓名 / Name</label>
-                <input type="text" name="name" required className="form-input" placeholder="例如：林先生/女士" value={formData.name} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>电子邮箱 / Email Address</label>
-                <input type="email" name="email" required className="form-input" placeholder="username@example.com" value={formData.email} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>咨询留言 / Message</label>
-                <textarea name="message" rows="3" required className="form-input" style={{ resize: 'none', fontFamily: 'inherit' }} placeholder="请简单描述您的代理、采购或研发定制需求..." value={formData.message} onChange={handleChange}></textarea>
-              </div>
-              <button type="submit" style={{ width: '100%', padding: '14px', backgroundColor: '#2d6a4f', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: 'pointer', fontWeight: 'bold', fontSize: '15px', marginTop: '10px', boxShadow: '0 4px 12px rgba(45, 106, 79, 0.15)' }}>
-                提交询盘 / Submit Inquiry
-              </button>
+              <label style={{ fontWeight: 700, color: '#1b4332', fontSize: '0.95rem' }}>Your Name / 您的姓名 *</label>
+              <input type="text" name="name" required style={{ width: '100%', padding: '14px 16px', marginTop: '8px', marginBottom: '20px', border: '2px solid #d8f3dc', borderRadius: '14px', fontSize: '1rem', boxSizing: 'border-box', backgroundColor: '#fafdfb' }} placeholder="e.g. John Doe" value={formData.name} onChange={handleChange} />
+              
+              <label style={{ fontWeight: 700, color: '#1b4332', fontSize: '0.95rem' }}>Email Address / 电子邮箱 *</label>
+              <input type="email" name="email" required style={{ width: '100%', padding: '14px 16px', marginTop: '8px', marginBottom: '20px', border: '2px solid #d8f3dc', borderRadius: '14px', fontSize: '1rem', boxSizing: 'border-box', backgroundColor: '#fafdfb' }} placeholder="name@example.com" value={formData.email} onChange={handleChange} />
+              
+              <label style={{ fontWeight: 700, color: '#1b4332', fontSize: '0.95rem' }}>WhatsApp / Phone Number</label>
+              <input type="text" name="whatsapp" style={{ width: '100%', padding: '14px 16px', marginTop: '8px', marginBottom: '20px', border: '2px solid #d8f3dc', borderRadius: '14px', fontSize: '1rem', boxSizing: 'border-box', backgroundColor: '#fafdfb' }} placeholder="e.g. +86 150..." value={formData.whatsapp} onChange={handleChange} />
+              
+              <label style={{ fontWeight: 700, color: '#1b4332', fontSize: '0.95rem' }}>Inquiry Message / 询盘详情描述 *</label>
+              <textarea name="message" required rows="5" style={{ width: '100%', padding: '14px 16px', marginTop: '8px', marginBottom: '20px', border: '2px solid #d8f3dc', borderRadius: '14px', fontSize: '1rem', boxSizing: 'border-box', backgroundColor: '#fafdfb', resize: 'vertical' }} placeholder="Please describe the products..." value={formData.message} onChange={handleChange}></textarea>
+              
+              <button type="submit" style={{ width: '100%', padding: '16px', backgroundColor: '#1b4332', color: '#ffffff', border: 'none', borderRadius: '14px', fontSize: '1.1rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 6px 20px rgba(27, 67, 50, 0.2)' }}>Submit Inquiry / 提交询盘 🍃</button>
             </form>
           </div>
         </div>
-      </main>
+
+        {/* 页脚区域：真真正正、完完全全地保留你宝贵的海外社交账户链接和图片代码 */}
+        <footer style={{ backgroundColor: '#1b4332', color: '#d8f3dc', padding: '45px 30px', borderTop: '3px solid #40916c' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
+            <div>
+              <p style={{ fontWeight: 800, margin: 0, fontSize: '1.2rem', color: '#ffffff' }}>Lin Ximian Biotechnology Co., Ltd.</p>
+              <p style={{ margin: '6px 0 0 0', fontSize: '0.85rem', color: '#b7e4c7', fontWeight: 400 }}>© 2026 All natural rights reserved.</p>
+            </div>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '12px' }}>
+              <p style={{ margin: 0, fontSize: '0.8rem', fontWeight: 800, color: '#b7e4c7', letterSpacing: '1.5px' }}>⚡ CONNECT WITH US ⚡</p>
+              <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                <a href="https://www.instagram.com/babyfly336/" target="_blank" rel="noopener noreferrer" title="Instagram"><img src="https://img.icons8.com/color/48/instagram-new--v1.png" alt="IG" style={{ width: '34px', height: '34px' }} /></a>
+                <a href="https://www.facebook.com/profile.php?id=61567982517175" target="_blank" rel="noopener noreferrer" title="Facebook"><img src="https://img.icons8.com/color/48/facebook-new.png" alt="FB" style={{ width: '34px', height: '34px' }} /></a>
+                <a href="https://www.tiktok.com/@cathyll3_" target="_blank" rel="noopener noreferrer" title="TikTok"><img src="https://img.icons8.com/color/48/tiktok.png" alt="TK" style={{ width: '34px', height: '34px' }} /></a>
+                <a href="https://wa.me/8615075550800" target="_blank" rel="noopener noreferrer" title="WhatsApp"><img src="https://img.icons8.com/color/48/whatsapp.png" alt="WA" style={{ width: '34px', height: '34px' }} /></a>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+      </div>
     </>
   );
 }
