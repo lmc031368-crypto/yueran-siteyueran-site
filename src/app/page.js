@@ -1,20 +1,30 @@
 "use client";
 
-import React from 'react';
-// 引入 Next.js 专用图片组件，彻底解决 Vercel 的 <img> 编译拦截
+import React, { useState } from 'react';
+// 引入 Next.js 专用图片组件，彻底防止 Vercel 的 <img> 拦截报错
 import Image from 'next/image';
 
 export default function Home() {
+  // 表单状态管理
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("🔺 Thank you! Your inquiry has been submitted successfully.\n提交成功！我们会尽快与您联系 🍃");
-    e.target.reset();
+    alert(`🔺 Thank you, ${formData.name || 'Dear'}!\nYour inquiry has been submitted successfully.\n提交成功！我们会尽快与您联系 🍃`);
+    setFormData({ name: '', email: '', message: '' });
   };
 
   return (
     <>
-      {/* 1. 安全注入原版全套视觉动效（卡片悬浮弹起、图片内敛放大、按钮 hover） */}
+      {/* 1. 全套视觉动效与排版样式（包含你最爱的卡片弹起、图片内敛放大） */}
       <style dangerouslySetInnerHTML={{ __html: `
         html {
           scroll-behavior: smooth;
@@ -27,7 +37,7 @@ export default function Home() {
           color: #333;
         }
         
-        /* 顶部大横幅容器 */
+        /* 顶部大横幅 */
         .hero-banner {
           width: 100%;
           max-width: 1100px;
@@ -51,7 +61,7 @@ export default function Home() {
           z-index: 2;
         }
 
-        /* 核心产品网格布局 */
+        /* 产品网格布局 */
         .products-grid {
           display: flex;
           flex-wrap: wrap;
@@ -62,7 +72,7 @@ export default function Home() {
           padding: 0 20px;
         }
 
-        /* 完美的卡片 Hover 向上弹起放大特效 */
+        /* 核心卡片悬浮向上弹起放大特效 */
         .product-card {
           background: #ffffff;
           border-radius: 24px;
@@ -95,55 +105,82 @@ export default function Home() {
           transform: scale(1.08);
         }
 
-        /* 社交媒体小窗口与联系区块 */
-        .social-contact-section {
+        /* 底部双栏布局容器 */
+        .bottom-section {
           max-width: 1100px;
-          margin: 40px auto 60px auto;
+          margin: 40px auto 80px auto;
           padding: 0 20px;
           display: flex;
           flex-wrap: wrap;
           gap: 30px;
-          justify-content: space-between;
           width: 100%;
           box-sizing: border-box;
         }
-        .social-window {
+        
+        .card-window {
           flex: 1;
-          min-width: 300px;
+          min-width: 320px;
           background: #ffffff;
           border-radius: 24px;
-          padding: 24px;
+          padding: 30px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+          box-sizing: border-box;
         }
+
+        /* 社交媒体按钮 */
         .social-icons {
           display: flex;
-          gap: 16px;
-          margin-top: 15px;
+          gap: 14px;
+          margin-top: 20px;
         }
         .social-btn {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
+          padding: 10px 18px;
+          border-radius: 50px;
           background: #f0f4f1;
-          display: flex;
-          justify-content: center;
-          align-items: center;
           color: #2d6a4f;
           text-decoration: none;
-          font-weight: bold;
+          font-weight: 600;
+          font-size: 13px;
           transition: all 0.2s;
         }
         .social-btn:hover {
           background: #2d6a4f;
           color: #ffffff;
-          transform: scale(1.1);
+          transform: translateY(-2px);
+        }
+
+        /* 表单输入框通用样式 */
+        .form-group {
+          margin-bottom: 16px;
+        }
+        .form-group label {
+          display: block;
+          margin-bottom: 6px;
+          font-size: 13px;
+          color: #2d6a4f;
+          font-weight: 600;
+        }
+        .form-input {
+          width: 100%;
+          padding: 12px;
+          border: 1px solid #e0e6e2;
+          border-radius: 12px;
+          background-color: #fbfcfb;
+          font-size: 14px;
+          box-sizing: border-box;
+          transition: border 0.2s;
+        }
+        .form-input:focus {
+          outline: none;
+          border-color: #2d6a4f;
+          background-color: #ffffff;
         }
       `}} />
 
-      {/* 2. 页面主体：完全复刻你的 Lin Ximian 生物科技官网 */}
+      {/* 2. 页面主体内容 */}
       <main>
         
-        {/* 顶部绿色森林大横幅 */}
+        {/* 顶部森林巨幕横幅 */}
         <div className="hero-banner">
           <Image 
             src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200&q=80" 
@@ -159,7 +196,7 @@ export default function Home() {
             <p style={{ fontSize: '18px', color: '#e2f0e7', margin: '0 0 24px 0', letterSpacing: '0.5px' }}>
               Natural Skincare & Advanced Technology Solutions
             </p>
-            <a href="#contact" style={{
+            <a href="#inquiry-form-section" style={{
               padding: '12px 32px',
               backgroundColor: '#2d6a4f',
               color: '#ffffff',
@@ -169,19 +206,15 @@ export default function Home() {
               fontSize: '15px',
               boxShadow: '0 4px 15px rgba(0,0,0,0.15)',
               transition: 'background 0.2s'
-            }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#1b4332'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#2d6a4f'}
-            >
+            }}>
               Inquire Now / 立即咨询
             </a>
           </div>
         </div>
 
-        {/* 产品卡片展示网格（包含护肤品、宠物等精美图片） */}
+        {/* 精美三大产品卡片网格 */}
         <div className="products-grid">
           
-          {/* 产品卡片 1：高端自然护肤系列 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
@@ -199,7 +232,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 产品卡片 2：科学宠物护理系列 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
@@ -217,7 +249,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 产品卡片 3：前沿生物技术研发 */}
           <div className="product-card">
             <div className="image-container">
               <Image 
@@ -237,44 +268,86 @@ export default function Home() {
 
         </div>
 
-        {/* 底部功能区：社交媒体小窗口 + 接口提交表单 */}
-        <div className="social-contact-section" id="contact">
+        {/* 底部双栏：左边社交媒体小窗口 + 右边核心动态询盘表单 */}
+        <div className="bottom-section">
           
-          {/* 社交媒体小窗口组件 */}
-          <div className="social-window">
-            <h3 style={{ color: '#1b4332', margin: '0 0 10px 0', fontSize: '18px' }}>关注夕眠生态</h3>
-            <p style={{ color: '#666', fontSize: '13px', lineHeight: '1.5', margin: 0 }}>
-              在社交媒体上获取我们最新的生物科技研发进展与限时优惠资讯：
+          {/* 左侧：社交媒体小窗口 */}
+          <div className="card-window">
+            <h3 style={{ color: '#1b4332', margin: '0 0 12px 0', fontSize: '20px' }}>关注夕眠生态</h3>
+            <p style={{ color: '#666', fontSize: '14px', lineHeight: '1.6', margin: 0 }}>
+              在各个社交媒体平台上关注我们，获取关于绿色生物科技、纯素护肤配方的最新研发动态与限时惊喜。
             </p>
             <div className="social-icons">
-              <a href="#" className="social-btn" title="WeChat">微信</a>
-              <a href="#" className="social-btn" title="Xiaohongshu">小红书</a>
-              <a href="#" className="social-btn" title="Instagram">Ins</a>
-              <a href="#" className="social-btn" title="LinkedIn">领英</a>
+              <a href="#" className="social-btn">微信公众号</a>
+              <a href="#" className="social-btn">小红书</a>
+              <a href="#" className="social-btn">Instagram</a>
             </div>
           </div>
 
-          {/* 测试提交接口表单 */}
-          <div className="social-window" style={{ minWidth: '320px' }}>
-            <h3 style={{ color: '#1b4332', margin: '0 0 15px 0', fontSize: '18px' }}>商务意向咨询</h3>
+          {/* 右侧：完美的 #inquiry-form-section 询盘表单区域 */}
+          <div className="card-window" id="inquiry-form-section">
+            <h3 style={{ color: '#1b4332', margin: '0 0 6px 0', fontSize: '20px' }}>商务意向登记</h3>
+            <p style={{ color: '#888', fontSize: '13px', margin: '0 0 20px 0' }}>请留下您的联系方式，我们的团队会尽快与您取得联系。</p>
+            
             <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>您的姓名 / Name</label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  required 
+                  className="form-input" 
+                  placeholder="例如：林先生/女士"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>电子邮箱 / Email Address</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  required 
+                  className="form-input" 
+                  placeholder="username@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>咨询留言 / Message</label>
+                <textarea 
+                  name="message" 
+                  rows="3" 
+                  required 
+                  className="form-input" 
+                  style={{ resize: 'none', fontFamily: 'inherit' }}
+                  placeholder="请简单描述您的代理、采购或研发定制需求..."
+                  value={formData.message}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+
               <button type="submit" style={{
                 width: '100%',
                 padding: '14px',
                 backgroundColor: '#2d6a4f',
                 color: '#ffffff',
                 border: 'none',
-                borderRadius: '16px',
+                borderRadius: '14px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                fontSize: '14px',
+                fontSize: '15px',
+                marginTop: '10px',
                 boxShadow: '0 4px 12px rgba(45, 106, 79, 0.15)',
                 transition: 'background 0.2s'
               }}
               onMouseOver={(e) => e.target.style.backgroundColor = '#1b4332'}
               onMouseOut={(e) => e.target.style.backgroundColor = '#2d6a4f'}
               >
-                点击测试提交接口
+                提交询盘 / Submit Inquiry
               </button>
             </form>
           </div>
@@ -283,5 +356,7 @@ export default function Home() {
 
       </main>
     </>
+  );
+}
   );
 }
